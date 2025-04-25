@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ESDUA | E-Sport Deaf Ukraine</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: black;
+      color: #00aaff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    .logo-img {
+      margin-top: 40px;
+      max-width: 90%;
+      height: auto;
+      animation: glowLogo 2s ease-in-out infinite alternate;
+    }
+    @keyframes glowLogo {
+      0% {
+        filter: drop-shadow(0 0 5px #00aaff);
+        transform: scale(1);
+      }
+      100% {
+        filter: drop-shadow(0 0 20px #00ffff);
+        transform: scale(1.02);
+      }
+    }
+    .choose-text {
+      font-size: 1.5rem;
+      margin: 40px 0 20px;
+      text-shadow: 0 0 10px #00aaff;
+      animation: fadeInText 2s ease-in-out, glowText 2s ease-in-out infinite alternate;
+    }
+    @keyframes fadeInText {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes glowText {
+      0% {
+        text-shadow: 0 0 10px #00aaff;
+      }
+      100% {
+        text-shadow: 0 0 20px #00ffff;
+      }
+    }
+    .game-container {
+      height: 120px;
+      overflow-y: scroll;
+      scroll-behavior: smooth;
+      position: relative;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      margin: 0 10px;
+    }
+    .game-container::-webkit-scrollbar {
+      display: none;
+    }
+    .game-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      font-size: 2rem;
+      font-weight: bold;
+      text-shadow: 0 0 15px #00aaff;
+    }
+    .game {
+      cursor: pointer;
+      transition: transform 0.4s ease, color 0.4s ease;
+      opacity: 0.5;
+      transform: scale(0.9);
+    }
+    .game:hover {
+      transform: scale(1.1);
+      color: white;
+      opacity: 0.8;
+    }
+    .game.selected {
+      color: #ffffff;
+      text-shadow: 0 0 20px white;
+      transform: scale(1.3);
+      opacity: 1;
+    }
+    .telegram-link {
+      font-size: 1.2rem;
+      text-decoration: none;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 10px;
+      color: #00aaff;
+      text-shadow: 0 0 10px #00aaff;
+      background: transparent;
+      transition: all 0.3s ease;
+      display: inline-block;
+      margin: 30px auto;
+      animation: pulse 2s infinite;
+    }
+    .telegram-link:hover {
+      color: white;
+      text-shadow: 0 0 20px #ffffff;
+      transform: scale(1.1);
+    }
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 170, 255, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 20px rgba(0, 170, 255, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 170, 255, 0);
+      }
+    }
+    .grid-bg {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60vh;
+      background: url('file:///C:/Users/vadim/Desktop/ESDUA/1.png') no-repeat center bottom;
+      background-size: cover;
+      z-index: -1;
+    }
+
+    @media (max-width: 768px) {
+      .game-list {
+        font-size: 1.4rem;
+      }
+      .choose-text {
+        font-size: 1.2rem;
+      }
+      .telegram-link {
+        font-size: 1rem;
+        padding: 10px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <img src="file:///C:/Users/vadim/Desktop/ESDUA/3445.png" alt="ESDUA Logo" class="logo-img">
+  <div class="choose-text">ВЫБЕРИТЕ ИГРУ:</div>
+
+  <div class="game-container">
+    <div class="game-list">
+      <div class="game" data-link="https://t.me/+upW8UCpmT6o1YmNi">FC25</div>
+      <div class="game" data-link="https://t.me/+jNorLY9BEkxiZGQy">Counter-Strike 2</div>
+      <div class="game" data-link="#">PUBG Mobile</div>
+      <div class="game" data-link="https://t.me/+51ouyzhY9JtmOTA6">Tom Clancy's Rainbow Six</div>
+      <div class="game" data-link="https://t.me/+WFCKV6vOCBliMjNi">Dota2</div>
+      <div class="game" data-link="#">World of Tank</div>
+      <div class="game" data-link="#">Gran Turismo 7</div>
+      <div class="game" data-link="https://t.me/+16rXIfN85JxhYTM6">Asseto Corsa Competizione</div>
+    </div>
+  </div>
+
+  <a id="telegramBtn" class="telegram-link" href="https://t.me/+Y4YvB6ALs4MzNjVi" target="_blank">ПЕРЕЙТИ В TELEGRAM</a>
+
+  <div class="grid-bg"></div>
+
+  <script>
+    const games = document.querySelectorAll('.game');
+    const telegramBtn = document.getElementById('telegramBtn');
+
+    games.forEach(game => {
+      game.addEventListener('click', () => {
+        games.forEach(g => g.classList.remove('selected'));
+        game.classList.add('selected');
+        game.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        const link = game.getAttribute('data-link');
+        telegramBtn.href = link !== '#' ? link : 'https://t.me/+Y4YvB6ALs4MzNjVi';
+      });
+    });
+  </script>
+</body>
+</html>
